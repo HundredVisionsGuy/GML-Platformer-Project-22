@@ -9,6 +9,11 @@ var _move = key_right - key_left;
 hsp = _move * walksp;
 vsp = vsp + grv;
 
+// Jumping Mechanic
+if ( place_meeting(x, y+1, oWall) && (key_jump)) {
+	vsp = -jumpsp;
+}
+
 // Horizontal Collision Check
 if ( place_meeting(x + hsp, y, oWall) ) {
 	// Move towards object until just before a collision

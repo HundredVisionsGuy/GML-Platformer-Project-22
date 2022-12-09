@@ -34,3 +34,8 @@ if ( place_meeting(x, y + vsp, oWall) ) {
 	vsp = 0;
 }
 y = y + vsp;
+
+// Check to see if the player is idle or not (no vertical or horizontal speed
+if (hsp == 0 && vsp == 0) {
+	isIdle = true;
+}

@@ -6,3 +6,6 @@ grv = 0.3;
 walksp = 4;
 jumpsp = 9;
 
+// For idle animation
+isIdle = false;
+isBlinking = false;

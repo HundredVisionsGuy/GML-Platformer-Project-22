@@ -44,7 +44,7 @@ if (!place_meeting(x, y+1, oWall)) {
 	sprite_index = sPlayerJump;
 	image_speed = 0;
 	
-	// Are we jumping?
+	// Are we moving up?
 	if (vsp < -4.5) {
 		image_index = 1;
 	}
@@ -69,5 +69,6 @@ else {
 	}
 }
 
+// Turn to face the direction we are moving horizontally
 if (hsp != 0) image_xscale = sign(hsp);
 

@@ -5,15 +5,38 @@ key_left = keyboard_check(vk_left);
 key_right = keyboard_check(vk_right);
 key_jump = keyboard_check_pressed(vk_space);
 
+// Are we on a wall (within 5 pixels on either side)?
+var onAWall = place_meeting(x+5, y, oWall) - place_meeting(x-5, y, oWall);
+
+// Subtract 1 from mvtLocked every step (until we reach 0)
+mvtLocked = max(mvtLocked -1, 0);
+
 var _move = key_right - key_left;
 hsp = _move * walksp;
 
-vsp = vsp + grv;
-
-// Jumping Mechanic
-if ( place_meeting(x, y+1, oWall) && (key_jump)) {
-	vsp = -jumpsp;
+// Jumping Mechanic (for wall jumps as well) 
+// only works if mvtLocked has cooled down to 0
+if (mvtLocked <= 0) {
+	// If we on a wall, vertical speed will never
+	// be greater than 5 
+	if (onAWall != 0) vsp = min(vsp + 1, 5);
+	else vsp = vsp + grv;
+	
+	if (key_jump) {
+		// standard jump
+		if ( place_meeting(x, y+1, oWall) && (key_jump)) {
+			vsp = -jumpsp;
+		}
+		// wall jump
+		if (onAWall != 0) {
+			vsp = -jumpsp;
+			hsp = onAWall * walksp;
+			// set the cooldown (movement Locked) variable to 10
+			mvtLocked = 10;
+		}
+	}
 }
+
 
 // Horizontal Collision Check
 if ( place_meeting(x + hsp, y, oWall) ) {
